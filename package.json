@@ -1,0 +1,21 @@
+{
+  "name": "httpc",
+  "version": "1.0.0",
+  "description": "cliente http",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "luiseduardofrias",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22"
+  }
+}

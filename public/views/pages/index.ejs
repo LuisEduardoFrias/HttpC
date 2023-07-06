@@ -1,0 +1,79 @@
+<%- include('../partials/hearder'); %>
+
+<% for (const i in routes) {
+  const tittle = Reflect.ownKeys(routes[i])[0];
+  const props = Reflect.get(routes[i], tittle);
+  %>
+
+  <label class="tittle-seccion"><%- tittle.toUpperCase() %></label>
+
+  <% for (const j in props) {
+    const rou = props[j];
+    const methods = rou.method;
+    %>
+
+    <form id="<%- tittle %>-<%- j %>" class="form_">
+
+      <label class="text-method"
+        style="background-color:<%- rou.headerColor %>;"
+        >Method: <%- methods?.toUpperCase() %></label>
+
+      <div class="body-container">
+
+        <input id="<%- tittle %>-<%- j %>" class="text-url"
+        value="<%- rou.baseUrl + rou.path %>">
+
+        <%
+        const arrayEmpty = (arr) => !Array.isArray(arr) || arr.length === 0;
+
+        if (!arrayEmpty(rou.params)) {
+          %>
+          <div class="box container-paranms">
+
+            <% rou.params.map((e)=> {
+              %>
+              <div class="content-tx-paranm">
+                <label id="t-tittle-paranm"><%- e %></label>
+                <input id="<%- tittle %>-<%- j %>" class="tx tx-value-paranm"
+                name="tx-value-paranm-<%- j %>"
+                placeholder="value" />
+            </div>
+              <%
+            }); %>
+
+        </div>
+        <%
+      } %>
+
+      <% if (`${methods}` === "post" || `${methods}` === "put") {
+        %>
+
+        <div class="container-text-area">
+          <textarea id="<%- tittle %>-<%- j %>" class="tx tx-number" name="tx-number-post" rows="6" readonly="readonly" cols="1"></textarea>
+
+          <textarea id="<%- tittle %>-<%- j %>" class="tx tx-body" name="tx-body" placeholder="body json"></textarea>
+        </div>
+
+        <%
+      } %>
+
+      <button type="submit" class="btn btn-submit">Reques</button>
+
+      <div id="<%- tittle %>-<%- j %>" class="box conten-result">
+        <label id="<%- tittle %>-<%- j %>" class="text-status"></label>
+        <textarea id="<%- tittle %>-<%- j %>" class="box result">
+
+        </textarea>
+      </div>
+
+    </div>
+
+  </form>
+
+  <%
+} %>
+
+<%
+} %>
+
+<%- include('../partials/fooder'); %>
