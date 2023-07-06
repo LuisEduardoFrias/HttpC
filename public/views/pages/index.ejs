@@ -5,8 +5,12 @@
   const props = Reflect.get(routes[i], tittle);
   %>
 
-  <label class="tittle-seccion"><%- tittle.toUpperCase() %></label>
-
+    <% if (tittle !== "_base_") {
+    %>
+    <label class="tittle-seccion"><%- tittle.toUpperCase() %></label>
+    <%
+  } %>
+  
   <% for (const j in props) {
     const rou = props[j];
     const methods = rou.method;

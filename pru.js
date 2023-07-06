@@ -1,12 +1,10 @@
 const express = require("express");
-const path = require("path");
-const gateway = require("./gateway");
-const company = require("./routes/company");
-const employed = require("./routes/employed");
 const cors = require("cors");
 const morgan = require("morgan");
 
-require("ejs");
+const gateway = require("./index");
+const company = require("./routes/company");
+const employed = require("./routes/employed");
 
 const app = express();
 
@@ -14,19 +12,16 @@ const app = express();
 //app.set("protocol", "http//");
 //app.set("domain", "localhost:");
 app.set("port", 8000);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "public/views/pages"));
 //middlewares
 app.use(express.text());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(__dirname + "/public"));
 app.use(morgan("dev")); // combined
 app.use(cors());
 // routes
 const gate = new gateway(app);
 
-const data = [
+const _data = [
   { Key: "1", Name: "C#", ImageName: "cShart.png" },
   { Key: "2", Name: "React", ImageName: "react.png" },
   { Key: "3", Name: "Html 5", ImageName: "html5.png" },
@@ -40,19 +35,30 @@ const data = [
   { Key: "11", Name: "BootStrap", ImageName: "bootStrap.png" },
 ];
 
-
 gate.get("/skills", (req, res) => {
-  console.log("skill get")
-  res.status(200).json(data);
+  res.status(200).json(_data);
+})
+
+gate.get("/skills/:id", (req, res) => {
+  res
+    .status(200)
+    .json({ messaje: "skills get - id: " + req.params.id });
 });
 
-gate.post("/skills", (req, res) => {
-  console.info(req.body);
-  res.status(200).json({ message: "added", data: req.body });
+gate.delete("/skills/:id/:user/:pass", (req, res) => {
+  
+  const id = req.params.id;
+  const user = req.params.user;
+  const pass = req.params.pass;
+  
+  res
+    .status(200)
+    .json({ message: "added", data: { id, user, pass}});
 });
 
 gate.routes("/company", company);
 gate.routes("/employed", employed);
+
 gate.api();
 
 app.listen(app.get("port"), () =>

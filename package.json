@@ -4,7 +4,7 @@
   "description": "cliente http",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon pru.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "luiseduardofrias",

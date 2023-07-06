@@ -1,8 +1,14 @@
+const path = require("path");
+const _static = require('serve-static');
 class gateway {
   //
   constructor(app) {
     this.colectionRoutes = [];
     this.app = app;
+    this.app.set("pathPublic", __dirname + "/public");
+    this.app.set("view engine", "ejs");
+    app.use(_static(app.get("pathPublic")));
+    this.app.set("views", path.join(__dirname, "public/views/pages"));
     this._baseUrl =
       (this.app.get("protocol") ?? "http://") +
       (this.app.get("domain") ?? "localhost:") +
@@ -35,12 +41,18 @@ class gateway {
   }
   //
   addColectionRoutes(path, method) {
+    
+   const paranms = path.split("/")
+   .map(e => (e.search(":") !== -1) && e )
+   .filter(e => e !== false)
+   .map(e => e.replace(":",""));
+
     this.colectionRoutes.push({
-      base: [
+      _base_: [
         {
           baseUrl: this._baseUrl,
           path: path,
-          params: "", //Todo parametros
+          params: paranms,
           method: method,
           headerColor: this.colorForMethod(method),
         },
