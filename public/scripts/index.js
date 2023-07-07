@@ -59,7 +59,7 @@ tABody.forEach((body_) =>
   })
 );
 
-form.forEach((form_) =>
+form.forEach((form_) => {
   form_.addEventListener(
     "submit",
     (event) => {
@@ -73,6 +73,10 @@ form.forEach((form_) =>
       let textStatus;
       let contenResul;
       let isfetch = true;
+      let loadin;
+
+
+     //Todo refactorizar
 
       try {
         [...form_.childNodes].forEach((ch) => {
@@ -110,6 +114,10 @@ form.forEach((form_) =>
               } else if (cha.className === "container-text-area") {
                 [...cha.childNodes].forEach((chal) => {
                   if (`${chal.className}`.search("tx-body") !== -1) {
+                 
+                    chal.style.backgroundColor = "black"
+                    getTANum(chal).style.backgroundColor = "black";
+                
                     txBody = chal.value;
 
                     if (
@@ -118,19 +126,32 @@ form.forEach((form_) =>
                     ) {
                       if (txBody.trim() === "") {
                         chal.style.backgroundColor = "#ffa1a1";
+                        getTANum(chal).style.backgroundColor = "#ffa1a1";
                       }
 
                       isfetch = false;
                     }
                   }
                 });
-              } else if (`${cha.className}`.search("conten-result") !== -1) {
+              } 
+              else if(cha.className === "lds-dual-ring"){
+                
+                [...ch.childNodes].forEach((chal_) => {
+                    if (`${chal_.className}`.search("conten-result") !== -1) {
+                      chal_.style.display= "none";
+                    }
+                });
+                
+                loadin = cha;
+                loadin.style.display = "block";
+             } else if (`${cha.className}`.search("conten-result") !== -1) {
                 contenResul = cha;
                 [...cha.childNodes].forEach((chal) => {
                   if (chal.className === "text-status") {
                     textStatus = chal;
                   } else if (`${chal.className}`.search("result") !== -1) {
                     result = chal;
+                    result.style.backgroundColor = "black";
                   }
                 });
               }
@@ -142,6 +163,8 @@ form.forEach((form_) =>
       }
 
       if (!isfetch) {
+        loadin.style.display = "none";
+        textStatus.innerHTML = "";
         alert("se requieren algunos datos.");
       } else {
         
@@ -158,6 +181,7 @@ form.forEach((form_) =>
           body: txBody,
         })
           .then((response) => {
+            loadin.style.display = "none";
             contenResul.style.display = "flex";
             textStatus.innerHTML = `${response.statusText}  `;
             textStatus.innerHTML += `${response.status}`;
@@ -179,6 +203,9 @@ form.forEach((form_) =>
             result.innerHTML = JSON.stringify(data, undefined, 4);
           })
           .catch((err) => {
+            loadin.style.display = "none";
+            textStatus.innerHTML = "";
+            contenResul.style.backgroundColor = "red";
             contenResul.style.display = "flex";
             result.style.backgroundColor = "rgba(249,0,0,0.762)";
             result.innerHTML =
@@ -188,4 +215,5 @@ form.forEach((form_) =>
     },
     false
   )
+  }
 );

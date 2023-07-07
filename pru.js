@@ -56,8 +56,30 @@ gate.delete("/skills/:id/:user/:pass", (req, res) => {
     .json({ message: "added", data: { id, user, pass}});
 });
 
-gate.routes("/company", company);
-gate.routes("/employed", employed);
+
+gate.post("/areas", (req, res, next) => {
+  
+setTimeout(function(){
+    res.status(200).json({ messaje: "post area", data: req.body });
+}, 3000);
+
+  
+});
+
+gate.put("/cargos", (req, res, next) => {
+  res.status(200).json({ messaje: "put cargo", data: req.body });
+});
+
+gate.post("/empleados", (req, res, next) => {
+  res.status(200).json({ messaje: "post emplesdos", data: req.body });
+});
+
+gate.put("/ventas", (req, res, next) => {
+  res.status(200).json({ messaje: "put ventas", data: req.body});
+});
+
+//gate.routes("/company", company);
+//gate.routes("/employed", employed);
 
 gate.api();
 

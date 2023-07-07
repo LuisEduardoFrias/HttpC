@@ -47,8 +47,17 @@ class gateway {
    .filter(e => e !== false)
    .map(e => e.replace(":",""));
 
-    this.colectionRoutes.push({
-      _base_: [
+   let isBase = false;
+   this.colectionRoutes.filter(e => {
+    if( Reflect.ownKeys(e)[0] === "_base_")
+    {
+      isBase = true;
+    }})
+
+    if(!isBase)
+    {
+     this.colectionRoutes.push({
+        _base_: [
         {
           baseUrl: this._baseUrl,
           path: path,
@@ -56,8 +65,22 @@ class gateway {
           method: method,
           headerColor: this.colorForMethod(method),
         },
-      ],
-    });
+       ],
+      });
+    }
+    else {
+       this.colectionRoutes.filter(e => {
+       if(Reflect.ownKeys(e)[0] === "_base_")
+       {
+            e._base_.push({
+              baseUrl: this._baseUrl,
+              path: path,
+              params: paranms,
+              method: method,
+              headerColor: this.colorForMethod(method),
+          })
+       }})
+    }
   }
   //
   routes(path, obj) {
