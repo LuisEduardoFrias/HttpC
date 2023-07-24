@@ -11,7 +11,7 @@ const app = express();
 //settings
 //app.set("protocol", "http//");
 //app.set("domain", "localhost:");
-app.set("port", 8000);
+app.set("port", 8080);
 //middlewares
 app.use(express.text());
 app.use(express.json());

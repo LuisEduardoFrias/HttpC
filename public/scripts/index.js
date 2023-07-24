@@ -134,7 +134,7 @@ form.forEach((form_) => {
                   }
                 });
               } 
-              else if(cha.className === "lds-dual-ring"){
+              else if(cha.className === "ld-dual-ring"){
                 
                 [...ch.childNodes].forEach((chal_) => {
                     if (`${chal_.className}`.search("conten-result") !== -1) {
@@ -213,7 +213,7 @@ form.forEach((form_) => {
             result.innerHTML =
               "Hubo un problema con la petición Fetch: " + err.message;
           });
-        }, 3000);
+        }, 2000);
       }
     },
     false
