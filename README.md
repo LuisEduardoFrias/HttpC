@@ -7,43 +7,122 @@ $ npm install ["url"] (https://github.com/LuisEduardoFrias/HttpC.git)
 
 Usage
 
+=> * require code.
+=> ~ optional code.
+=> > exampor code.
+
+////////////////////// index 
+
 const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
 
-const exampleRoutes = require("./routes/exampleRoutes");
+* const gateway = require("httpc");
 
-require("ejs");
+const company = require("./company");
 
 const app = express();
 
 //settings
+~ app.set("protocol", "http//");
+~ app.set("domain", "localhost:");
+* app.set("port", 8080);
 
-*app.set("protocol", "http//");
-*app.set("domain", "localhost:");
-*app.set("port", 8000);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "public/views/pages"));
 //middlewares
-
-app.use(express.static(__dirname + "/public"));
-
-*const gate = new gateway(app);
+app.use(express.text());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan("dev"));
+app.use(cors());
 
 // routes
 
-*gate.get("/skills", (req, res) => {
-  console.log("skill get")
-  res.status(200).json(data);
+* const gate = new gateway(app);
+
+> gate.get("/skills", (req, res) => {
+  res.status(200).json([{ Key: "1", Name: "C#", ImageName: "cShart.png" }]);
+})
+
+> gate.get("/skills/:id", (req, res) => {
+  res.status(200)
+  
+  .json({ messaje: "skills get - id: " + req.params.id });
 });
 
-*gate.post("/skills", (req, res) => {
-  console.info(req.body);
-  res.status(200).json({ message: "added", data: req.body });
+> gate.delete("/skills/:id/:user/:pass", (req, res) => {
+  
+  const id = req.params.id;
+  const user = req.params.user;
+  const pass = req.params.pass;
+  
+  res.status(200).json({ message: "added", data: { id, user, pass}});
 });
 
-*gate.routes("/example_routes", exampleRoutes;
-*gate.api();
+
+> gate.post("/areas", (req, res, next) => {
+  setTimeout(function(){
+    res.status(200).json({ messaje: "post area", data: req.body });
+  }, 3000);
+});
+
+> gate.put("/cargos", (req, res, next) => {
+  res.status(200).json({ messaje: "put cargo", data: req.body });
+});
+
+> gate.post("/empleados", (req, res, next) => {
+  res.status(200).json({ messaje: "post emplesdos", data: req.body });
+});
+
+> gate.put("/ventas", (req, res, next) => {
+  res.status(200).json({ messaje: "put ventas", data: req.body});
+});
+
+> gate.routes("/company", company);
+
+* gate.api();
 
 app.listen(app.get("port"), () =>
   console.log(`server on port:${app.get("port")}`)
 );
 
+/////////////////   company
+
+const express = require("express");
+const app = express.Router();
+
+app.use((req, res, next) => {
+  console.log("in areas...");
+  next();
+});
+
+app.get("/areas", (req, res, next) => {
+  res.status(404).json({ messaje: "areas home page get" });
+});
+
+app.get("/areas/:id", (req, res, next) => {
+  res
+    .status(300)
+    .json({ messaje: "areas home page get - id: " + req.params.id });
+});
+
+app.post("/areas", (req, res, next) => {
+  res.status(500).json({ messaje: "In areas post" });
+});
+
+app.put("/areas", (req, res, next) => {
+  res.status(200).json({ messaje: "In areas put" });
+});
+
+app.delete("/areas/:id/:user/:pass", (req, res, next) => {
+  res.status(404).json({
+    messaje:
+      "In areas delete" +
+      req.params.id +
+      "-" +
+      req.params.user +
+      "-" +
+      req.params.pass,
+  });
+});
+
+module.exports = app;
