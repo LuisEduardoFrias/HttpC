@@ -179,7 +179,7 @@ LOADING
 
 */
 
-.lds-dual-ring {
+.ld-dual-ring {
   display: none;
   margin: auto;
   width: 35px;
@@ -189,10 +189,10 @@ LOADING
   border: 6px double #32fffe;
   box-shadow: 0 0 2px 1px #1adae8 inset, 0 0 2px 1px #1adae8;
   border-color: #32fffe transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+  animation: ld-dual-ring 1.2s linear infinite;
 }
 
-@keyframes lds-dual-ring {
+@keyframes ld-dual-ring {
   0% {
     transform: rotate(0deg);
   }

@@ -168,7 +168,9 @@ form.forEach((form_) => {
         alert("se requieren algunos datos.");
       } else {
         
-        fetch(textUrl, {
+        setTimeout(() => 
+        {
+          fetch(textUrl, {
           method: textMethod,
           mode: "cors",
           cache: "no-cache",
@@ -211,6 +213,7 @@ form.forEach((form_) => {
             result.innerHTML =
               "Hubo un problema con la petición Fetch: " + err.message;
           });
+        }, 3000);
       }
     },
     false
