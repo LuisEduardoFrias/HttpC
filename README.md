@@ -6,10 +6,6 @@ Este es un módulo de Node.js. La instalación se realiza utilizando el comando 
 
 $ npm install ["url"] (https://github.com/LuisEduardoFrias/HttpC.git)
 
-## Uso
-
-* Código requerido.
-
 ## index
 
 ```javascript
