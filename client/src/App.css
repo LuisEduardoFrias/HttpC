@@ -1,0 +1,34 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px solid red;
+  width: 100%;
+
+  > h1 {
+    font-size: 30px;
+  }
+
+  > nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > ul {
+      position: absolute;
+    }
+  }
+}
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

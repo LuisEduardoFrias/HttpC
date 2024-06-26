@@ -1,0 +1,67 @@
+extends ../layout/layout
+
+block content
+  each _route in routes
+    - const _title = Reflect.ownKeys(_route)[0];
+    - const props = Reflect.get(_route, _title);
+   
+    if (_title !== "_base_") 
+      div.container-title-seccion
+        h2.title-seccion #{_title.toUpperCase()}
+      
+    - let _index = -1;
+    - let index_paramn = -1;
+    each _prop in props
+      - _index += 1;
+      - const _route = _prop;
+      - const _methond = _route.method;
+      - const _jsonObj = _route.jsonObj;
+      - const _url = _route.baseUrl + _route.path;
+      - const _id = `${_title}-${_index}`
+      - const arrayEmpty = (arr) => !Array.isArray(arr) || arr.length === 0;
+      div.card
+        
+        div.card-header(style={"background-color": _route.headerColor})
+          span.header-title #{_methond.toUpperCase()}
+          label.header-dropdown-btn(for=`${_title}-chb-${_index}`)
+            span.material-symbols-outlined ⌃
+            input(type="checkbox" id= `${_title}-chb-${_index}` checked=true)
+        
+        div.card-body
+          input.body-text-url(readonly=true name="url-" value= _url)
+
+          form.body-form(id=`${_title}-fm-${_index}`)
+            input.body-text-url(id="url" readonly=true name="url" value= _url)
+            input.body-text-httpmethod(readonly=true name="http-method" value= _methond)
+            input(id="token" name="token")
+            
+            if (!arrayEmpty(_route.params)) 
+              div.box(class="form-container-paranms")
+
+                for _element in _route.params
+                  - index_paramn += 1;
+                  div.container-tx-paranm
+                    label.tx-title-paranm(for= `${_title}-${index_paramn}-${_index}`) #{_element}
+                    input(
+                      id=`${_title}-${index_paramn}-${_index}`
+                      name= "paramn-" + _element
+                      placeholder = "Value" 
+                      class = "tx tx-value-paranm"
+                    )
+            
+            if (`${_methond}` === "post" || `${_methond}` === "put")
+              div.form-container-textarea
+                textarea(class="tx tx-number" name="tx-number-post" rows="6" readonly="readonly" cols="1")
+                textarea(class="tx tx-body" name="tx-body-post" placeholder="body json") #{_jsonObj}
+            
+            
+            button(type="submit" class="btn btn-submit") Reques
+            
+            div(class="ld-dual-ring")
+          
+          div.box(class="body-container-result")
+            label.text-status-code(for = `${_title}-ta-${_index}`)
+            button.copy
+              span.material-symbols-outlined content_copy
+            textarea.box(class="result" id= `${_title}-ta-${_index}`)
+            

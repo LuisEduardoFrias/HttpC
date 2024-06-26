@@ -1,0 +1,21 @@
+{
+  "name": "punch_click_pro_api",
+  "version": "1.0.0",
+  "description": "The backend API created for an employee arrival registration system allows workers to clock in and out by entering a unique code. It records the time and date of each employee's clock in and out. It provides an efficient and secure way to manage employee attendance control in real-time. Ensures accurate tracking of punctuality and hours worked by each employee. It offers a robust interface for data communication between the frontend and the database.",
+  "main": "./httpc/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./user_register.js"
+  },
+  "author": "luiseduardofrias",
+  "license": "ISC",
+  "dependencies": {
+    "httpc": "^1.0.0",
+    "dajts": "^1.6.6"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  }
+}

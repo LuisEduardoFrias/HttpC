@@ -1,0 +1,29 @@
+{
+  "name": "punch_click_pro_client",
+  "private": true,
+  "version": "1.0.0",
+  "description": "The frontend client is the attractive and user-friendly interface for employees to clock in and out in the registration system. It allows employees to enter their custom code and clearly see if their entry has been successfully registered. Provides an interactive experience for employees when marking their attendance and tracking their arrival and departure history. Intuitively presents work schedule information and attendance statistics for each employee. It seamlessly integrates with the backend API to ensure smooth communication and real-time updating of registration data.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port=3000",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
+  }
+}

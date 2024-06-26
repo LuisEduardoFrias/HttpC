@@ -1,21 +1,10 @@
 {
-  "name": "httpc",
-  "version": "1.0.0",
-  "description": "cliente http",
-  "main": "index.js",
+  "name": "apps",
+  "private": true,
   "scripts": {
-    "dev": "nodemon pru.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch api/user_register.js & vite --port=3000 client/"
   },
   "author": "luiseduardofrias",
   "license": "ISC",
-  "dependencies": {
-    "ejs": "^3.1.9"
-  },
-  "devDependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.22"
-  }
+  "workspaces": ["api", "client", "httpc"]
 }
