@@ -1,0 +1,20 @@
+/*LOADIN*/
+#ld-dual-ring {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  z-index: 99;
+  display: block;
+  border: 8px double #ff3232;
+  border-inline-end: 6px double #ff3232;
+  border-block-end: 4px double #ff3232;
+  border-inline-start: 10px double transparent;
+  border-radius: 50%;
+  animation: ld-dual-ring 1.2s ease-in-out infinite backwards;
+}
+
+@keyframes ld-dual-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}

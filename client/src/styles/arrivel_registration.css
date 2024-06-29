@@ -1,0 +1,53 @@
+.arrivel-reg-container {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+
+  > h2 {
+    width: 100%;
+    padding-inline: 5px;
+    text-align: left;
+    font-size: 16px;
+    background-color: #000000;
+  }
+
+  .tabla-container {
+    border: 2px solid greenyellow;
+    height: 203px;
+    overflow-y: auto;
+    width: 500px;
+    padding-block-start: 20px;
+
+    > table {
+      width: 100%;
+      height: 100%;
+
+      > thead {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 98;
+        background: linear-gradient(0deg, #ff070771 0%, black 50%);
+
+        > tr {
+          > th {
+            width: 150px;
+          }
+        }
+      }
+
+      > tbody {
+        background-color: red;
+        width: 100%;
+        height: 120px;
+        overflow: auto;
+
+        > tr {
+          > td {
+            background: linear-gradient(0deg, #000000c8 0%, transparent 70%);
+          }
+        }
+      }
+    }
+  }
+}

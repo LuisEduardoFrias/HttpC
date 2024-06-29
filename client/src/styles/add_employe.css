@@ -1,0 +1,19 @@
+.add-employe-container {
+  color: white;
+
+  > h2 {
+    font-size: 18px;
+  }
+
+  > form div label,
+  span {
+    color: white;
+    border-color: white;
+  }
+
+  > form div div input {
+    color: white;
+    border-color: white;
+    border-block-end: 2px solid white;
+  }
+}

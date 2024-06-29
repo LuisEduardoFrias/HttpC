@@ -36,16 +36,29 @@ app.get('/:id', (req, res, next) => {
   res.status(200).json(result.data);
 });
 
-app.post('/', (req, res, next) => {
-  const result = registerHour(res.bady);
+app.post(
+  '/',
+  (req, res, next) => {
+    const { fingerprint } = req.body;
 
-  if (result.error) {
-    res.status(500).json({ error: result.error });
-    return;
-  }
+    const result = registerHour(fingerprint);
 
-  res.status(200).json(result.data);
-});
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    if (!result) {
+      res.status(402).json({ error: 'Resource not found.' });
+      return;
+    }
+
+    if (result.error) {
+      res.status(500).json({ error: result.error });
+      return;
+    }
+
+    res.status(200).json(result.data);
+  },
+  ['fingerprint']
+);
 
 const arrival_registration = app.router();
 export default arrival_registration;

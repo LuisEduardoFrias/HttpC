@@ -9,10 +9,12 @@ export function getById(id) {
   return daj.getByKeySync(Employer.getInstance(), id);
 }
 
-export function getByFingerPrint(id) {
-  const _employer = daj.getSync(Employer.getInstance());
+export function getByFingerPrint(fingerprint) {
+  const _employe = daj.getSync(Employer.getInstance());
 
-  return _employer.find((emp) => emp.fingerPrint === id);
+  if (_employe.error !== null || _employe?.data === null) return null;
+
+  return  _employe.data.find((emp) => emp.fingerPrint == fingerprint);
 }
 
 export function create(employer, token) {

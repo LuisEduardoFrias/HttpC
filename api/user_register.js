@@ -25,8 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev')); // combined
 app.use(
   cors({
-    origin: '',
-    methonds: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: 'http://localhost:3000',
+    accept: 'application/json',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
 

@@ -2,25 +2,34 @@
 *
 */
 .punch-container {
+  background: linear-gradient(3deg, #ff070771 0%, transparent 50%);
+  box-shadow:
+    -2px -2px 5px 1px #940000b8,
+    2px 2px 5px 1px #ffffffa3;
   border: 2px solid red;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px 1px white;
   width: 100%;
+  height: 100%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
   > h1 {
     font-size: 20px;
   }
 
   > div {
+    width: inherit;
+    height: inherit;
 
     > div {
-      width: 100%;
-      height: 30px;
+      width: inherit;
+      height: inherit;
 
       display: grid;
       place-content: center;
-      background-color: #ffffff27;
+      background-color: transparent;
       backdrop-filter: blur(5px);
 
       > p {

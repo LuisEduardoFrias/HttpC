@@ -34,7 +34,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 520px;
   min-height: 100vh;
 }
 
@@ -43,7 +43,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+.btn {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -53,12 +53,23 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  -webkit-tap-highlight-color: transparent;
 }
-button:hover {
-  border-color: #646cff;
+
+.btn:hover {
+  border-color: #f9f9f9;
 }
-button:focus,
-button:focus-visible {
+.btn:active {
+  border-color: #f9f9f9;
+  transform: scale(0.9);
+}
+.btn:disabled {
+  border: none;
+  transform: none;
+}
+
+.btn:focus,
+.btn:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -72,5 +83,22 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+.Alert {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+
+  > .alert-header {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-start;
+    font-weight: bold;
   }
 }
