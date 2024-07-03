@@ -1,5 +1,10 @@
-test/
+api/
+client/
+img/
 node_modules/
+httpc/.gitignore
+httpc/README.md
 .gitignore
 yarn.lock
 package-lock.json
+datafile.daj.db

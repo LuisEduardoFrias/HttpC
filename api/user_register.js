@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import gateway from 'httpc';
+import gateway from 'api_httpc';
 
 import Admin from './models/admin.js';
 

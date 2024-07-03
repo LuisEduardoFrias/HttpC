@@ -1,5 +1,5 @@
 import express from 'express';
-import { router } from 'httpc';
+import { router } from 'api_httpc';
 import { login, logout } from '../repositories/register_repo.js';
 import Admin from '../models/admin.js';
 
