@@ -1,7 +1,8 @@
 import daj, { User } from 'dajts';
 import Employer from '../models/employer.js';
 
-export function getAll() {
+export function getAll(token) {
+  if (!daj.checkTokenSync({ token })) return null;
   return daj.getSync(Employer.getInstance());
 }
 
@@ -14,17 +15,18 @@ export function getByFingerPrint(fingerprint) {
 
   if (_employe.error !== null || _employe?.data === null) return null;
 
-  return  _employe.data.find((emp) => emp.fingerPrint == fingerprint);
+  return _employe.data.find((emp) => emp.fingerPrint == fingerprint);
 }
 
 export function create(employer, token) {
   if (!daj.checkTokenSync({ token })) return null;
 
-  const _employer = new Employer(...employer);
-
-  console.log(_employer);
-
-  return daj.postSync(_employer);
+  return daj.postSync(new Employer(
+    employer.fingetprint,
+    employer.usercardid,
+    employer.username,
+    employer.userlastname,
+  ));
 }
 
 export function update(id, employer, token) {
@@ -32,7 +34,7 @@ export function update(id, employer, token) {
 
   const _employer = new Employer(...employer);
 
-  console.log(_employer);
+  //console.log(_employer);
 
   return daj.putSync(_employer);
 }

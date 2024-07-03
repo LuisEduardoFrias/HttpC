@@ -49,7 +49,7 @@ export default class Cronos {
 }
 
 function timePart(time) {
-  const [hour, minute, second] = time.split(':');
+  let [hour, minute, second] = time.split(':');
   const isPM = time.includes('pm');
 
   if (isPM && hour !== '12') {

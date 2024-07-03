@@ -12,21 +12,23 @@ header {
   padding-bottom: 3px;
   height: 50px;
   width: 100%;
-
+  -moz-box-shadow: -1px 2px 5px 1px #67050571;
+  -webkit-box-shadow: -1px 2px 5px 1px #67050571;
+  
   display: flex;
   justify-content: space-around;
   align-items: center;
-
-  > h1 {
+  
+  >h1 {
     font-size: 30px;
   }
-
-  > nav {
+  
+  >nav {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    > ul {
+    
+    >ul {
       top: 50px;
       position: absolute;
       width: 150px;
@@ -34,27 +36,27 @@ header {
       transition:
         height 1s ease,
         opacity 1s ease;
-
+      
       background-color: black;
       padding-block: 3px;
       list-style: none;
       border-radius: 3px;
       z-index: 99;
       box-shadow: 0 0 3px 1px #d0d0d08e;
-
+      
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
       gap: 4px;
-
-      > li {
+      
+      >li {
         background-color: #3a3a3ab8;
         width: 100%;
         height: 25px;
         box-shadow: 0 1px 1px 1px #9494948e;
-
-        > button {
+        
+        >button {
           box-sizing: padding-box;
           border: none;
           border-radius: 0;
@@ -64,12 +66,13 @@ header {
           width: 100%;
           background-color: transparent;
         }
-
-        > button:hover {
+        
+        >button:hover {
           outline-style: none;
           background-color: #6e6e6e8e;
         }
-        > button:active {
+        
+        >button:active {
           font-size: 12px;
         }
       }

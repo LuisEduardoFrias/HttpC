@@ -9,7 +9,7 @@ tABody.forEach((body_) =>
   })
 );
 
-tABody.forEach((body_) => body_.addEventListener('keyup', (e) => {}));
+tABody.forEach((body_) => body_.addEventListener('keyup', (e) => { }));
 
 const getTANum = (body) => {
   for (const ten of tANumber) {
@@ -100,6 +100,7 @@ function submit(event) {
         .then((response) => {
           bcr.style.display = 'grid';
           bcr.style.borderColor = getColorByStatusCode(response.status);
+          bcr.style.boxShadow = 'inset 0px 0px 10px 5px ' + getColorByStatusCode(response.status);
           statusCode.innerHTML = `${response.statusText}  `;
           statusCode.innerHTML += `${response.status}`;
 
@@ -142,10 +143,10 @@ function submit(event) {
 }
 
 function getColorByStatusCode(statusCode) {
-  if (statusCode >= 200 && statusCode < 300) return '#00f904c2';
-  else if (statusCode >= 300 && statusCode < 400) return '#002ef9c2';
-  else if (statusCode >= 400 && statusCode < 500) return '#f90000c2';
-  else if (statusCode >= 500) return '#606060c2';
+  if (statusCode >= 200 && statusCode < 300) return '#09ff0d';
+  else if (statusCode >= 300 && statusCode < 400) return '#002ef9f8';
+  else if (statusCode >= 400 && statusCode < 500) return '#f90000';
+  else if (statusCode >= 500) return '#606060';
   else return 'transparent';
 }
 

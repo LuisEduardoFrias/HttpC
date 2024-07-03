@@ -41,7 +41,7 @@ export default function useFetch(baseUrl: string) {
       headers: headers,
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : null,
     });
   }
 
@@ -84,7 +84,7 @@ export default function useFetch(baseUrl: string) {
             setLoading(false);
             setFetch(null);
           });
-      }, 5000);
+      }, 500);
     }
   }, [dataFetch]);
 

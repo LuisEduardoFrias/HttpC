@@ -9,12 +9,14 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 type TableXProps = {
-  data: any;
+  data: Array<Object>;
+  headers: string[] | null;
 };
 
-export default function TableX({ data }: TableXProps) {
+export default function TableX({ data, headers }: TableXProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  let columns = [];
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -27,7 +29,8 @@ export default function TableX({ data }: TableXProps) {
     setPage(0);
   };
 
-  const columns = Reflect.ownKeys(data[0]);
+  if (data)
+    columns = Reflect.ownKeys(data[0]);
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -35,47 +38,60 @@ export default function TableX({ data }: TableXProps) {
         <Table
           stickyHeader
           aria-label='sticky table'>
-          <TableHead>
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  key={index}
-                  align={'left'}
-                  style={{ minWidth: 170 }}>
-                  {column}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow
-                    hover
-                    role='checkbox'
-                    tabIndex={-1}
-                    key={index}>
-                    {columns.map((column, ind) => {
+
+          {!data ?
+            (<TableHead style={{
+              fontSize: '20px', fontWeight: "bold", display: 'grid', placeContent: "center", height: '50px'
+            }}>
+              <span>No data found</span>
+            </TableHead>)
+            :
+            (
+              <>
+                <TableHead>
+                  <TableRow>
+                    {(headers ?? columns).map((column, index) => (
+                      <TableCell
+                        key={index}
+                        align={'left'}
+                        style={{ minWidth: 170 }}>
+                        {column}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data
+                    ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ?.map((row, index) => {
                       return (
-                        <TableCell
-                          key={ind}
-                          align={'left'}>
-                          {row[column]}
-                        </TableCell>
+                        <TableRow
+                          hover
+                          role='checkbox'
+                          tabIndex={-1}
+                          key={index}>
+                          {columns.map((column, ind) => {
+                            return (
+                              <TableCell
+                                key={ind}
+                                align={'left'}>
+                                {row[column]}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
                       );
                     })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+                </TableBody>
+              </>
+            )
+          }
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={data.length}
+        count={data?.length ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

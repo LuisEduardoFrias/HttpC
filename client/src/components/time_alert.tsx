@@ -30,21 +30,15 @@ export default function TimeAlert({ show, exe, alertData }: AlertProps) {
   if (!alertData.variant) alertData.variant = variantType.outlined;
 
   const color =
-    alertData.variant == variantType.filled
-      ? 'white'
-      : '#00f5d3'; /*alertData.color == aletType.info
-      ? 'blue'
-      : alertData.color == aletType.success
-      ? 'green'
-      : 'red';
-*/
+    alertData.variant == variantType.filled ? 'white' :
+      (alertData.color == aletType.info ? 'blue' :
+        alertData.color == aletType.success ? 'green' :
+          'red');
 
   const borderColor =
-    alertData.severity == aletType.info
-      ? 'blue'
-      : alertData.severity == aletType.success
-      ? 'green'
-      : 'red';
+    alertData.severity == aletType.info ? 'blue' :
+      alertData.severity == aletType.success ? 'green' :
+        'red';
 
   useEffect(() => {
     setVisible(show);
@@ -75,7 +69,7 @@ export default function TimeAlert({ show, exe, alertData }: AlertProps) {
         <Icon>{alertData.severity}</Icon>
         <label>{firstUC(alertData.severity)}</label>
       </div>
-      {alertData.message}
+      {firstUC(alertData.message)}
     </div>
   );
 }

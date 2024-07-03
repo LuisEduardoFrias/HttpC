@@ -26,32 +26,32 @@ header {
   height: 100px;
   padding: 5px;
   background-color: var(--title-bg);
-
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 15px;
-
-  > label {
+  
+  >label {
     font-size: var(--title-size);
     font-weight: bold;
     text-align: center;
     user-select: none;
     text-shadow: 2px 2px 4px var(--shadow-color);
   }
-
-  > div {
+  
+  >div {
     width: 80%;
     display: flex;
     justify-content: center;
     gap: 5px;
-
-    > label {
+    
+    >label {
       user-select: none;
     }
-
-    > input {
+    
+    >input {
       background-color: transparent;
       border: 1px solid #000000;
       border-radius: 3px;
@@ -60,8 +60,8 @@ header {
       color: white;
       width: 100%;
     }
-
-    > input::placeholder {
+    
+    >input::placeholder {
       color: white;
     }
   }
@@ -71,7 +71,7 @@ body {
   min-height: 100dvh;
   color: var(--font-color);
   background: var(--theme-bg);
-
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +112,7 @@ main {
   border: 2px solid #8b8b8b;
   border-radius: 10px;
   box-shadow: 3px 3px 3px 1px var(--shadow-color);
-
+  
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50px 1fr;
@@ -123,7 +123,7 @@ main {
   padding: 5px;
   height: 50px;
   border-radius: 8px 8px 0 0;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -144,7 +144,7 @@ main {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-
+  
   display: grid;
   place-content: center;
 }
@@ -162,7 +162,7 @@ main {
   padding-inline: 10px;
   padding-bottom: 10px;
   transition: height 1s ease;
-
+  
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -225,7 +225,7 @@ main {
   padding: 5px;
   opacity: 1;
   transition: opacity 1s ease;
-
+  
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -236,14 +236,13 @@ main {
   border: 2px solid gray;
   border-radius: 3px;
   padding: 5px;
-
+  
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.form-container-paranms {
-}
+.form-container-paranms {}
 
 .container-tx-paranm {
   display: flex;
@@ -274,8 +273,7 @@ main {
   box-shadow: -1px -1px 1px 0px #1adae8 inset;
 }
 
-.tx-value-paranm {
-}
+.tx-value-paranm {}
 
 .form-container-textarea {
   display: flex;
@@ -313,7 +311,7 @@ main {
   background-color: transparent;
   color: white;
   cursor: pointer;
-
+  
   font-weight: bold;
   transition:
     color 1s ease,
@@ -357,11 +355,12 @@ main {
 .body-container-result {
   opacity: 1;
   transition: opacity 1s ease;
-  border-width: 3px;
+  box-shadow: inset 2px 2pc;
+  border-width: 4px;
   padding: 3px 0 0 0;
   box-sizing: border-box;
   display: none;
-
+  
   grid-template-columns: 1fr 30px;
   grid-template-rows: 30px 1fr;
   grid-template-areas: 'stcode copy' 'res res';
@@ -403,10 +402,15 @@ main {
   grid-area: res;
   background-color: transparent;
   border-width: 0;
-  border-top: 3px solid white;
+  border-top: 3px solid #f9ff00;
   border-radius: 0;
   padding: 10px 10px;
   font-size: 10px;
   height: 200px;
   resize: none;
+}
+
+.result:focus {
+  border: none;
+  box-shadow: none;
 }

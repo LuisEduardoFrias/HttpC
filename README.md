@@ -9,79 +9,89 @@ Este es un módulo de Node.js.
 $ npm install httpc
 $ yarn add httpc
 
-## models/Company file
+## api/apimodels/employer - file
 
 ```javascript
 
-export default class Company {
-    constructor(name, industry, location) {
-        this.name = name;
-        this.industry = industry;
-        this.location = location;
-    }
+export default class Employer {
+  constructor(fingerPrint, userCardId, userName, userLastName) {
+    super();
+    this.fingerPrint = fingerPrint;
+    this.userCardId = userCardId;
+    this.userName = userName;
+    this.userLastName = userLastName;
+  }
 }
 
 ```
 
-## routes/Company file
+## api/routes/employer - file
 
 ```javascript
-// En este código se utiliza la clase router de la librería 'httpc' para definir rutas en la aplicación.
-// La clase router se importa de 'httpc' y se utiliza para crear un enrutador en Express.
+// In this code, the router class from the 'httpc' library is used to define routes in the application.
+// The router class is imported from 'httpc' and used to create a router in Express.
 import express from 'express';
 import { router } from 'httpc';
 import Employer from '../models/employer.js';
+import { create, getAll, getById, update, remove, } from '../repositories/employer_repo.js';
 
-// La clase router recibe un objeto de Express como parámetro en su constructor.
+// The router class receives an Express object as a parameter in its constructor.
 const app = new router(express);
 
+// Allows defining routes with the GET, POST, PUT, and DELETE methods, just like express.
 
-app.use((req, res, next) => {
-    console.log("in areas...");
-    next();
-});
+// Some functionalities of the router class:
 
-// Permite definir rutas con los métodos GET, POST, PUT y DELETE, al igual queexpress.
+// - Allows the use of middleware with the use method to perform common actions on all routes.
+app.get('/:token',
+  (req, res, next) => {
+    const token = req.params.token;
+    const result = getAll(token);
 
-// Algunas funcionalidades de la clase router:
+    if (!result) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
 
-// - Permite el uso de middleware con el método use para realizar acciones comunes en todas las rutas.
-app.get("/areas", (req, res, next) => {
-    res.status(404).json({ messaje: "areas home page get" });
-});
+    if (result.error) {
+      res.status(500).json({ error: result.error });
+      return;
+    }
 
-app.get("/areas/:id", (req, res, next) => {
-    res.status(300).json({
-        messaje: "areas home page get - id: " + req.params.id
-    });
-});
+    res.status(200).json(result.data);
+  });
 
-// - Define rutas con el método post para peticiones POST, donde se puede especificar un array de strings o nombre de una clase que identifican los datos que se esperan en el body.
-app.post("/areas/:id", (req, res, next) => {
-    const numbers = req.body;
-    const arrayNumbers = numbers.split(","); 
+// Define routes using the POST method to handle POST requests. In these routes, you can specify an array of strings or the name of a class that identifies the JSON data expected in the request body.
+//create employe
+app.post(
+  '/:token',
+  (req, res, next) => {
+    const token = req.params.token;
+    const body = req.body;
 
-    res.status(500).json({ message: "In areas post", value: arrayNumbers[parseInt(req.params.id)] });
-}, ["numbers"]);
+    const result = create(body, token);
 
-app.put("/areas", (req, res, next) => {
-    res.status(200).json({ messaje: "In areas put" });
-});
+    if (!result) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
 
-app.delete("/areas/:id/:user/:pass", (req, res, next) => {
-    res.status(404).json({
-        messaje:
-            "In areas delete" +
-            req.params.id +
-            "-" +
-            req.params.user +
-            "-" +
-            req.params.pass
-    });
-});
+    if (result.error) {
+      res.status(500).json({ error: result.error });
+      return;
+    }
 
-const company = app.router();
-export default company;
+    res.status(200).json(result);
+  },
+  Employer
+);
+
+/*
+* more endpoint
+*/
+
+const employed = app.router();
+export default employed;
 
 ```
 
@@ -92,7 +102,7 @@ export default company;
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-// - Ayuda a httpc a crear un cliente HTTP para consumir los endpoints creados en Express.
+// Help httpc create an HTTP client to consume the endpoints created in Express.
 import gateway from 'httpc';
 
 import Company from './models/company.js';
@@ -101,7 +111,22 @@ import company from './routes/company.js';
 
 //----------------------------
 
-const app = express();
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import gateway from 'httpc';
+
+import Admin from './models/admin.js';
+
+import arrival_registration from './routes/arrival_registration.js';
+import employed from './routes/employed.js';
+import register from './routes/register.js';
+
+//----------------------------
+
+// The getAttribute class receives an Express object as a parameter in its constructor.
+// routes
+const gate = new gateway(app);
 
 //settings
 app.set('protocol', 'http://');
@@ -113,29 +138,18 @@ app.use(express.text());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev')); // combined
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    accept: 'application/json',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  })
+);
 
-// La clase getAttribute recibe un objeto de Express como parámetro en su constructor.
 // routes
 const gate = new gateway(app);
 
-gate.get("/skills", (req, res) => {
-    res.status(200).json([{ Key: "1", Name: "C#", ImageName: "cShart.png" }]);
-});
-
-gate.get("/skills/:id", (req, res) => {
-    res.status(200).json({ messaje: "skills get - id: " + req.params.id });
-});
-
-gate.delete("/skills/:id/:user/:pass", (req, res) => {
-    const id = req.params.id;
-    const user = req.params.user;
-    const pass = req.params.pass;
-
-    res.status(200).json({ message: "added", data: { id, user, pass } });
-});
-
-// - Define rutas con el método post para peticiones POST, donde se puede especificar un array de strings o nombre de una clase que identifican los datos que se esperan en el body.
+// - Define routes using the POST method to handle POST requests. In these routes, you can specify an array of strings or the name of a class that identifies the JSON data expected in the request body.
 gate.post("/areas", (req, res, next) => {
     const { number1, number2, number3 } = req.body;
     
@@ -149,19 +163,9 @@ gate.post("/areas", (req, res, next) => {
     }, 3000);
 },["number1","number2","number3"]);
 
-gate.post("/cargos", (req, res, next) => {
-    res.status(200).json({ messaje: "put cargo", data: req.body });
-}, Company);
-
-gate.post("/empleados", (req, res, next) => {
-    res.status(200).json({ messaje: "post empleados", data: req.body });
-},["name","lastname","age"]);
-
-gate.put("/ventas", (req, res, next) => {
-    res.status(200).json({ messaje: "put ventas", data: req.body });
-});
-
-gate.routes("/company", company);
+gate.routes('/register', register);
+gate.routes('/employed', employed);
+gate.routes('/arrival_registration', arrival_registration);
 
 gate.listen(() => console.log(`server on port:${app.get('port')}`));
 

@@ -1,9 +1,12 @@
 /*LOADIN*/
 #ld-dual-ring {
   position: absolute;
+  left: 5px;
+  top: 5px;
   width: 35px;
   height: 35px;
-  z-index: 99;
+  z-index: 99999;
+  background-color: #00000049;
   display: block;
   border: 8px double #ff3232;
   border-inline-end: 6px double #ff3232;

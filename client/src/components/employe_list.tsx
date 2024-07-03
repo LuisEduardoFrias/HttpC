@@ -1,118 +1,47 @@
 //
-import '../styles/arrivel_registration.css';
+import { useState, useEffect } from 'react';
+import useFetch, { Method } from '../hooks/use_fetch';
+import TimeAlert, { aletType, variantType } from './time_alert';
+import Loading from './loading';
 import TableX from './table';
+import '../styles/arrivel_registration.css';
 
-export default function EmployeList() {
-  interface registration {
-    id: string;
-    username: string;
-    date: DataTime;
-    io: string;
-  }
+export default function EmployeList({ token }: { token: string }) {
+  const [setFetch, data, loading] = useFetch(import.meta.env.VITE_API_BASE_URL);
+  const [show, setShow] = useState(false)
 
-  const data: readonly registration[] = [
-    {
-      id: '1527',
-      username: 'Jose tejeda',
-      date: '7:35 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5271',
-      username: 'Robert castr9',
-      date: '7:14 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '7157',
-      username: 'Alex Ortiz',
-      date: '7:30 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5168',
-      username: 'Santo salmiento',
-      date: '7:26 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '1527',
-      username: 'Jose tejeda',
-      date: '7:35 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5271',
-      username: 'Robert castr9',
-      date: '7:14 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '7157',
-      username: 'Alex Ortiz',
-      date: '7:30 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5168',
-      username: 'Santo salmiento',
-      date: '7:26 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '1527',
-      username: 'Jose tejeda',
-      date: '7:35 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5271',
-      username: 'Robert castr9',
-      date: '7:14 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '7157',
-      username: 'Alex Ortiz',
-      date: '7:30 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5168',
-      username: 'Santo salmiento',
-      date: '7:26 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '1527',
-      username: 'Jose tejeda',
-      date: '7:35 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5271',
-      username: 'Robert castr9',
-      date: '7:14 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '7157',
-      username: 'Alex Ortiz',
-      date: '7:30 A.M. 27/6/2024',
-      io: 'input',
-    },
-    {
-      id: '5168',
-      username: 'Santo salmiento',
-      date: '7:26 A.M. 27/6/2024',
-      io: 'input',
-    },
-  ];
+  const alertData = {
+    color: aletType.error,
+    severity: aletType.error,
+    message: data.error,
+    variant: variantType.filled,
+  };
+
+  useEffect(() => {
+    setFetch({
+      url: `employed/${token}`,
+    });
+  }, [])
+
+  useEffect(() => {
+    if (data.error)
+      setShow(!!data.error)
+  }, [data.error])
+
 
   return (
     <div className='arrivel-reg-container'>
       <h2>Employe List</h2>
-      <TableX data={data} />
+      {loading && <div style={{ width: '50px', height: '50px' }}><Loading /></div>}
+      <TimeAlert
+        key='TimeAlert'
+        show={show}
+        alertData={alertData}
+        exe={() => {
+          setShow(false);
+        }}
+      />
+      <TableX data={data.data} headers={["Id", "Finger print", "User CardId","User Name", "User LastName"]} />
     </div>
   );
 }

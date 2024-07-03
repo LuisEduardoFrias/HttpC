@@ -96,18 +96,20 @@ export default class gateway {
       });
     }
   }
-  //
+  // rutas base
   routes(path, obj) {
-    const _obj = `{ "${path.replace('/', '')}": []}`;
-    const objs = [];
-    let add_ = true;
+    this.#app.use(path, obj);
+    
+    const propsName = path.replace('/', '');
+    const _obj = {};
+
+    Reflect.set(_obj, propsName, []);
 
     obj?.stack.map((e) => {
-      add_ = true;
       if (e.route !== undefined) {
         const met = Reflect.ownKeys(e.route.methods)[0];
-        
-        objs.push({
+
+        _obj[propsName].push({
           baseUrl: this.#_baseUrl,
           path: path + e.route.path,
           params: e.keys?.map((e) => e.name),
@@ -115,20 +117,12 @@ export default class gateway {
           jsonObj: e.route.body_json,
           headerColor: this.#colorForHttpMethod(met),
         });
-        
+
         delete e.route.body_json;
-      } else {
-        add_ = false;
       }
     });
 
-    if (add_) {
-      this.#colectionRoutes.push(
-        JSON.parse(_obj.replace('[]', JSON.stringify(objs)))
-      );
-    }
-
-    this.#app.use(path, obj);
+    this.#colectionRoutes.push(_obj);
   }
   //
   listen(port, fn) {
