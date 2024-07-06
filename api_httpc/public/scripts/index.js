@@ -121,7 +121,7 @@ function submit(event) {
         .catch((err) => {
           console.log('fetch: ', err);
           bcr.style.borderColor = '#ff0000';
-          result.style.backgroundColor = '#f90000c2';
+          //result.style.backgroundColor = '#f90000c2';
           result.innerHTML =
             'Hubo un problema con la petición Fetch: ' + err.message;
         })

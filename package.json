@@ -1,9 +1,9 @@
 {
   "name": "api_httpc",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "The HTTPC library is a tool that enables the visual exploration and querying of endpoints in an Express application in a graphical manner. By integrating this library into your project, a /httpc route is added, providing an interactive web interface similar to Swagger in ASP.NET. Through this interface, developers can directly explore and test the various endpoints of the Express application, including the ability to send parameters and data required for queries. HTTPC simplifies the development process by offering an intuitive and efficient way to interact with the API of the Express application.",
   "main": "./api_httpc/index.js",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "node --watch api/user_register.js & vite --port=3000 client/"
   },

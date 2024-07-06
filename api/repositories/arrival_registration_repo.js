@@ -45,7 +45,7 @@ export function registerHour(fingerprint) {
   const _registerHour = new RegisterHour(fingerprint, input_output ? 'input' : 'output');
 
   const post = daj.postSync(_registerHour);
-  post.data = { userName: employe.userName };
+  post.data = { userName: employe?.userName };
 
   return post;
 }
