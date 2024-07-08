@@ -14,7 +14,7 @@ export default class gateway {
   #colectionRoutes = [];
   #_baseUrl = '';
 
-  constructor(app) {
+  constructor(app, out__dirname = null) {
     this.#app = app;
     this.#colectionRoutes = [];
 
@@ -24,6 +24,9 @@ export default class gateway {
 
     this.#app.set('view engine', 'pug');
     this.#app.set('views', path.join(__dirname, 'public/views/pages'));
+
+    if (!out__dirname)
+      this.#app.set('views', path.join(out__dirname, 'public/views/pages'));
 
     this.#_baseUrl =
       this.#app.get('protocol') +
@@ -77,11 +80,15 @@ export default class gateway {
       })
 
       if (obj) {
-        const requireBody = JSON.parse(obj[prop][index]["jsonObj"]);
+        const dataRoute = obj[prop][index];
+
+        if (dataRoute.jsonObj === '') { next(); return; }
+
+        const requireBody = JSON.parse(dataRoute.jsonObj);
         const propsRequireBody = Reflect.ownKeys(requireBody);
 
         if (propsBody.toString() !== propsRequireBody.toString()) {
-          res.status(400).send({ message: "The object sent in the request body does not match the expected format." })
+          res.status(400).send({ message: "The object sent in the request body does not match the expected format." });
           return;
         }
       }
@@ -197,28 +204,68 @@ export default class gateway {
   }
   //
 
-  use(fn) {
-    this.#app.set(fn);
+  use(path, fn = null) {
+    if (typeof path === 'function' && fn === null)
+      this.#app.use(path);
+    else if (typeof path === 'string' && fn !== null && typeof fn === 'function') {
+      this.#app.use(path, fn);
+    }
+    else {
+      throw new Error('The paramn \'fn\' is null');
+    }
   }
 
-  get(path, fn) {
+  get(path, fn, midlerware) {
     this.#addColectionRoutes(path, 'get');
-    this.#app.get(path, fn);
+    if (midlerware)
+      this.#app.get(path, midlerware, fn);
+    else
+      this.#app.get(path, fn);
   }
 
-  post(path, fn, obj = null) {
-    this.#addColectionRoutes(path, 'post', getProps(obj));
-    this.#app.post(path, fn);
+  post(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#addColectionRoutes(path, 'post', getProps(null));
+      this.#app.post(path, obj, fn);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#addColectionRoutes(path, 'post', getProps(obj));
+      this.#app.post(path, midlerware, fn);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#addColectionRoutes(path, 'post', getProps(obj));
+      this.#app.post(path, fn);
+    }
   }
 
-  put(path, fn, obj = null) {
-    this.#addColectionRoutes(path, 'put', getProps(obj));
-    this.#app.put(path, fn);
+  put(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#addColectionRoutes(path, 'put', getProps(null));
+      this.#app.put(path, obj, fn);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#addColectionRoutes(path, 'put', getProps(obj));
+      this.#app.put(path, midlerware, fn);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#addColectionRoutes(path, 'put', getProps(obj));
+      this.#app.put(path, fn);
+    }
   }
 
-  delete(path, fn) {
-    this.#addColectionRoutes(path, 'delete', getProps(obj));
-    this.#app.delete(path, fn);
+  delete(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#addColectionRoutes(path, 'delete', getProps(null));
+      this.#app.delete(path, obj, fn);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#addColectionRoutes(path, 'delete', getProps(obj));
+      this.#app.delete(path, midlerware, fn);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#addColectionRoutes(path, 'delete', getProps(obj));
+      this.#app.delete(path, fn);
+    }
   }
 }
 
@@ -233,26 +280,67 @@ export class router {
     return this.#app;
   }
 
-  use(fn) {
-    this.#app.use(fn);
+  use(path, fn = null) {
+    if (typeof path === 'function' && fn === null)
+      this.#app.use(path);
+    else if (typeof path === 'string' && fn !== null && typeof fn === 'function') {
+      this.#app.use(path, fn);
+    }
+    else {
+      throw new Error('The paramn \'fn\' is null');
+    }
   }
 
-  get(path, fn) {
-    this.#app.get(path, fn);
+  get(path, fn, midlerware) {
+    if (midlerware)
+      this.#app.get(path, midlerware, fn);
+    else
+      this.#app.get(path, fn);
   }
 
-  post(path, fn, obj = null) {
-    this.#app.post(path, fn);
-    addBodyJson(obj, this.#app);
+  post(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#app.post(path, obj, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#app.post(path, midlerware, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#app.post(path, fn);
+      addBodyJson(obj, this.#app);
+    }
   }
 
-  put(path, fn, obj = null) {
-    this.#app.put(path, fn);
-    addBodyJson(obj, this.#app);
+  put(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#app.put(path, obj, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#app.put(path, midlerware, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#app.put(path, fn);
+      addBodyJson(obj, this.#app);
+    }
   }
 
-  delete(path, fn) {
-    this.#app.delete(path, fn);
+  delete(path, fn, obj = null, midlerware = null) {
+    if (typeof obj === 'function') {
+      this.#app.delete(path, obj, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if (typeof obj === 'object' && midlerware !== null) {
+      this.#app.delete(path, midlerware, fn);
+      addBodyJson(obj, this.#app);
+    }
+    else if ((typeof obj === 'object' || obj === null) && midlerware === null) {
+      this.#app.delete(path, fn);
+      addBodyJson(obj, this.#app);
+    }
   }
 }
 
