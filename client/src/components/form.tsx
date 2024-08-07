@@ -56,7 +56,7 @@ export default function Form<T>({ url, method, message, validationEmptyFild, chi
     setFetch({
       url: url,
       method: method,
-      body: method == Method.GET ? null : formDataObject,
+      body: formDataObject,
     });
   }
 
