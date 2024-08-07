@@ -1,0 +1,20 @@
+{
+  "name": "resize",
+  "description": "app form resize",
+  "vercion": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",    "default_icon": {
+      "16": "/images/icon/resize.png",
+      "32": "/images/icon/resize.png",
+      "48": "/images/icon/resize.png",
+      "128": "/images/icon/resize.png"
+    }
+  },
+  "icons": {
+    "16": "/images/icon/resize.png",
+    "32": "/images/icon/resize.png",
+    "48": "/images/icon/resize.png",
+    "128": "/images/icon/resize.png"
+  }
+}
